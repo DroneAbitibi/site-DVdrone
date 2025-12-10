@@ -1,4 +1,4 @@
-// DV Drone - Gallery v2 (verbose + fallback)
+// DV Drone - Gallery simplifiée (inline seulement)
 (function(){
   const $ = (s, d=document) => d.querySelector(s);
   const container = $("#gallery");
@@ -6,7 +6,6 @@
     console.warn("[gallery] #gallery introuvable dans le DOM");
     return;
   }
-  console.log("[gallery] init: conteneur trouvé");
 
   // Lightbox minimale
   const lb = document.createElement("div");
@@ -29,18 +28,22 @@
   const lbCap = $("#lb-cap", lb);
   let photos = [];
   let idx = 0;
-  const inlinePhotos = Array.isArray(window.PHOTOS) ? window.PHOTOS : null;
 
   function open(i){
     idx = i;
     const p = photos[idx];
+    if (!p) return;
     lbImg.src = p.src;
     lbImg.alt = p.alt || "";
     lbCap.textContent = p.alt || "";
     lb.style.display = "grid";
     lb.setAttribute("aria-hidden","false");
   }
-  function close(){ lb.style.display = "none"; lb.setAttribute("aria-hidden","true"); }
+  function close(){
+    lb.style.display = "none";
+    lb.setAttribute("aria-hidden","true");
+  }
+
   $("#lb-close", lb).addEventListener("click", close);
   $("#lb-next", lb).addEventListener("click", ()=>open((idx+1)%photos.length));
   $("#lb-prev", lb).addEventListener("click", ()=>open((idx-1+photos.length)%photos.length));
@@ -53,10 +56,9 @@
   });
 
   function render(){
-    console.log("[gallery] rendu", photos);
     container.innerHTML = "";
     if (!photos.length){
-      container.innerHTML = '<p style="color:#cbd5c0">Aucune photo listée. Vérifie <code>photos.json</code>.</p>';
+      container.innerHTML = '<p style="color:#cbd5c0">Aucune photo listée.</p>';
       return;
     }
     photos.forEach((p, i) => {
@@ -64,6 +66,7 @@
       fig.style.margin = "0";
       fig.className = "ph";
       fig.style.position = "relative";
+
       const img = document.createElement("img");
       img.loading = "lazy";
       img.decoding = "async";
@@ -72,6 +75,7 @@
       img.style.cssText = "width:100%;height:100%;object-fit:cover;border-radius:12px;display:block";
       img.addEventListener("click", ()=>open(i));
       fig.appendChild(img);
+
       if (p.alt){
         const cap = document.createElement("figcaption");
         cap.textContent = p.alt;
@@ -82,41 +86,23 @@
           color:#000;
           font-weight:600;
           font-size:13px;
-          background:#fff;        /* Fond blanc opaque */
+          background:#fff;
           padding:2px 6px;
           border-radius:6px
         `;
         fig.appendChild(cap);
       }
+
       container.appendChild(fig);
     });
   }
 
-  function useList(list, source){
-    console.log(`[gallery] liste de photos chargée depuis ${source}`, list);
-    photos = Array.isArray(list) ? list : [];
+  // On utilise uniquement window.PHOTOS
+  if (Array.isArray(window.PHOTOS)) {
+    photos = window.PHOTOS;
     render();
+  } else {
+    console.warn("[gallery] window.PHOTOS est introuvable ou invalide");
+    container.innerHTML = '<p style="color:#cbd5c0">Aucune photo à afficher.</p>';
   }
-
-  // 1) Rend immédiatement ce qui est déjà inliné
-  if (inlinePhotos) {
-    useList(inlinePhotos, "window.PHOTOS (inline)");
-  }
-
-  // 2) Puis tente de recharger photos.json pour rester à jour (ex. GitHub Pages)
-  fetch("photos.json", {cache: "no-store"})
-    .then(r => {
-      console.log("[gallery] fetch photos.json →", r.status);
-      if (!r.ok) throw new Error("Status " + r.status);
-      return r.json();
-    })
-    .then(list => useList(list, "photos.json"))
-    .catch(err => {
-      console.warn("[gallery] Impossible de charger photos.json :", err);
-      if (!inlinePhotos) {
-        container.innerHTML =
-          '<p style="color:#cbd5c0">⚠️ Impossible de charger <code>photos.json</code>. '+
-          'Vérifie que le fichier est à la racine et que les noms d’images (<code>/photos/…</code>) sont exacts.</p>';
-      }
-    });
 })();
