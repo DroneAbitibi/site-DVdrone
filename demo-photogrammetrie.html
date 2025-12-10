@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Drone Abitibi – Démonstration photogrammétrie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  >
+
+  <style>
+    :root {
+      --bg1:#0f1c0f;
+      --bg2:#263321;
+      --text:#f5f7f5;
+      --muted:#dfe6de;
+      --accent:#a9c48a;
+      --panel:#1b2618;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, var(--bg2), var(--bg1));
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .back:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0.3rem 0 0.4rem;
+    }
+
+    .brand img {
+      width: min(120px, 35vw);
+      height: auto;
+      display: block;
+    }
+
+    .brand-name {
+      font-size: clamp(20px, 6vw, 30px);
+      margin: 0 0 8px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    .header p {
+      margin: 0;
+      max-width: 800px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+
+    #map {
+      width: 100%;
+      height: 520px;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .side-panel {
+      background: linear-gradient(135deg, var(--panel), #10170f);
+      border-radius: 0.75rem;
+      padding: 1rem 1.2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.55);
+      font-size: 0.9rem;
+    }
+
+    .side-panel h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .side-panel p {
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+      color: var(--muted);
+    }
+
+    .layer-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.6rem 0 0;
+    }
+
+    .layer-list li {
+      margin-bottom: 0.4rem;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      background: rgba(169,196,138,0.12);
+      border: 1px solid rgba(169,196,138,0.4);
+      color: var(--accent);
+      margin-right: 0.35rem;
+    }
+
+    .note {
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      color: rgba(223,230,222,0.8);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 0.6rem;
+    }
+
+    .report {
+      background: linear-gradient(135deg, rgba(169,196,138,0.08), rgba(15,28,15,0.7));
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 0.9rem;
+      padding: 1.4rem 1.5rem;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+      margin-top: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .report h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .report .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem 1.2rem;
+    }
+
+    .report-card {
+      background: rgba(20,25,18,0.82);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 0.75rem;
+      padding: 0.95rem 1rem;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .report-card .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.75rem;
+      color: rgba(223,230,222,0.75);
+      margin: 0;
+    }
+
+    .report-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .report-card ul {
+      margin: 0;
+      padding-left: 1.05rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .report-card li {
+      margin-bottom: 0.3rem;
+    }
+
+    .report-card strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .report small {
+      color: rgba(223,230,222,0.72);
+      line-height: 1.6;
+    }
+
+    /* Leaflet UI ajustements */
+    .leaflet-control-layers {
+      background: rgba(20,25,18,0.92);
+      color: var(--text);
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .leaflet-control-layers-expanded {
+      padding: 0.4rem 0.5rem;
+    }
+
+    .leaflet-control-layers-separator {
+      border-top: 1px solid rgba(255,255,255,0.18);
+      margin: 0.25rem 0;
+    }
+
+    .info-box {
+      background: rgba(20,25,18,0.9);
+      padding: 0.45rem 0.65rem;
+      border-radius: 0.45rem;
+      font-size: 0.8rem;
+      line-height: 1.3;
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+
+    .info-box strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      #map {
+        height: 420px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 1rem;
+      }
+      #map {
+        height: 360px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a href="index.html" class="back">← Retour à l'accueil</a>
+    <!--
+    <div class="brand">
+      <img src="assets/logo_vert.svg" alt="Logo Drone Abitibi">
+      <span class="brand-name">Drone Abitibi</span>
+    </div>
+    -->
+    <header class="header">
+      <h1>Démonstration de couches cartographiques</h1>
+      <p>
+        Cette carte interactive superpose plusieurs couches issues d’une même mission
+        de photogrammétrie : l’orthophoto pour la vue réaliste, un modèle numérique de
+        terrain (DTM) pour le relief du sol nu, un modèle numérique de surface (DSM) qui
+        inclut les objets présents (bâtiments, arbres). Activez ou désactivez les calques
+        à l’aide du sélecteur dans la carte pour comparer les rendus.
+      </p>
+    </header>
+
+    <div class="content">
+      <!-- Carte -->
+      <div id="map"></div>
+
+      <!-- Panneau explicatif -->
+      <aside class="side-panel">
+        <h2>Couches disponibles</h2>
+        <p>Chaque couche illustre un aspect différent de la même zone :</p>
+        <ul class="layer-list">
+          <li>
+            <span class="chip">Base</span>
+            <strong>Orthophoto</strong> – mosaïque d’images aériennes géoréférencées.
+          </li>
+          <li>
+            <span class="chip">DTM</span>
+            <strong>Modèle numérique de terrain</strong> – altitude du sol nu (végétation et bâtiments retirés).
+          </li>
+          <li>
+            <span class="chip">DSM</span>
+            <strong>Modèle numérique de surface</strong> – altitude incluant bâtiments, arbres, structures.
+          </li>
+        </ul>
+
+        <p class="note">
+          Cette page est fournie à titre de démonstration. Les couches et résolutions
+          peuvent être adaptées selon les besoins d’un projet précis (survol, volume,
+          suivi de chantier, etc.).
+        </p>
+      </aside>
+    </div>
+
+    <section class="report">
+      <h2>Résumé du traitement photogrammétrique</h2>
+      <p class="lead">
+        Présentation simplifiée des données de vol pour une lecture rapide par le public.
+        Les valeurs proviennent du même traitement <strong>OpenDroneMap 3.5.6</strong>
+        ayant servi à produire les couches affichées sur la carte.
+      </p>
+
+      <div class="report-grid">
+        <div class="report-card">
+          <p class="eyebrow">Mission</p>
+          <h3>Vol du 29 août 2025</h3>
+          <ul>
+            <li>Décollage 09:34, atterrissage 09:40 (6 min 27 s).</li>
+            <li>Traitement réalisé le 1<sup>er</sup> septembre avec <strong>OpenDroneMap 3.5.6</strong>.</li>
+          </ul>
+        </div>
+        <div class="report-card">
+          <p class="eyebrow">Zone couverte</p>
+          <h3>Environ 5 hectares</h3>
+          <ul>
+            <li>62 photos utilisées sur 64 (97&nbsp;%).</li>
+            <li>17&nbsp;782 points reconstruits sur 18&nbsp;283 (97&nbsp;%).</li>
+            <li>GSD moyen de <strong>4,2&nbsp;cm/pixel</strong> pour la netteté.</li>
+          </ul>
+        </div>
+        <div class="report-card">
+          <p class="eyebrow">Positionnement</p>
+          <h3>Référencé par GPS</h3>
+          <ul>
+            <li>Erreur GPS moyenne : 1,42&nbsp;m.</li>
+            <li>Précision estimée : CE90 <strong>2,17&nbsp;m</strong>, LE90 <strong>0,97&nbsp;m</strong>.</li>
+          </ul>
+        </div>
+        <div class="report-card">
+          <p class="eyebrow">Qualité 3D</p>
+          <h3>Ajustement des points</h3>
+          <ul>
+            <li>RMS : X 0,14&nbsp;m, Y 0,12&nbsp;m, Z 0,39&nbsp;m.</li>
+            <li>Modèle caméra : DJI FC9113 (4096×3072).</li>
+          </ul>
+        </div>
+      </div>
+
+      <small>
+        Étapes clés : capture des clichés, repérage des points communs, calcul du nuage de
+        points, ajustement 3D, génération des modèles de terrain et de surface, puis
+        création des tuiles d’orthophoto pour la carte. Ces indicateurs permettent de
+        vérifier rapidement la qualité du vol et des produits.
+      </small>
+    </section>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="">
+  </script>
+
+  <script>
+    // --- Initialisation de la carte ---
+    // Centre de ta zone
+    var centerLat = 48.36437985117837;
+    var centerLng = -79.12920231790572;
+    
+    // Bornes d’un carré d’environ 2 km x 2 km autour du centre
+    var bounds = L.latLngBounds(
+      [48.35539673942846, -79.14272313921768], // sud, ouest
+      [48.37336296292828, -79.11568149659377]  // nord, est
+    );
+    
+    var map = L.map('map', {
+      center: [centerLat, centerLng],
+      zoom: 16,              // à ajuster selon le niveau de détail souhaité
+      minZoom: 15,           // pour éviter de trop dézoomer
+      maxZoom: 21,           // adapté à tes tuiles z=19
+      maxBounds: bounds,     // limite le déplacement à ce carré
+      maxBoundsViscosity: 1  // effet “élastique” aux limites (1 = bloqué net)
+    });
+
+    var esriImagery = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      {
+        maxZoom: 20,
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
+      }
+    ).addTo(map); // <-- ACTIVÉ PAR DÉFAUT
+
+    var osm = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }
+    );
+    // --- Couches de base / overlays ---
+    // 1) Orthophoto (base)
+    // Source tuile orthophoto
+    var orthophoto = L.tileLayer(
+      'https://dvdrone-datasets.s3.ca-central-1.amazonaws.com/test001/tiles_ortho/{z}/{x}/{y}.png',
+      {
+        minZoom: 15,
+        maxZoom: 22,
+        tms: true,      // IMPORTANT : gdal2tiles = TMS -> Y inversé
+        attribution: '&copy; DV Drone - Orthophoto',
+      }
+    ).addTo(map);
+
+    // 2) DTM (MNT) – souvent visualisé en ombrage (hillshade) ou palette de couleurs
+    var dtm = L.tileLayer(
+      'https://dvdrone-datasets.s3.ca-central-1.amazonaws.com/test001/tiles_dtm/{z}/{x}/{y}.png',
+      {
+        minZoom: 15,
+        maxZoom: 22,
+        tms: true,      // IMPORTANT : gdal2tiles = TMS -> Y inversé
+        attribution: '&copy; DV Drone – DTM',
+      }
+    );
+
+    // 3) DSM – modèle numérique de surface
+    var dsm = L.tileLayer(
+      'https://dvdrone-datasets.s3.ca-central-1.amazonaws.com/test001/tiles_dsm/{z}/{x}/{y}.png',
+      {
+        minZoom: 15,
+        maxZoom: 22,
+        tms: true,      // IMPORTANT : gdal2tiles = TMS -> Y inversé
+        attribution: '&copy; DV Drone – DSM',
+      }
+    );
+    
+    // Si tu as un service WMS pour les courbes, ce serait plutôt:
+    /*
+    var contours = L.tileLayer.wms('https://example.com/geoserver/wms', {
+      layers: 'mon_workspace:contours',
+      format: 'image/png',
+      transparent: true,
+      attribution: '&copy; Courbes de niveau'
+    });
+    */
+
+    // --- Contrôle de couches ---
+    var baseMaps = {
+      "Esri World Imagery": esriImagery,
+      "openStreetMap": osm
+    };
+
+    var overlayMaps = {
+      "Orthophoto": orthophoto,
+      "DTM": dtm,
+      "DSM": dsm,
+    };
+
+    L.control.layers(baseMaps, overlayMaps, {
+      position: 'topright',
+      collapsed: false
+    }).addTo(map);
+
+    // --- Petit encadré d'information dynamique (optionnel) ---
+    var info = L.control({position: 'bottomleft'});
+
+    info.onAdd = function () {
+      this._div = L.DomUtil.create('div', 'info-box');
+      this.update();
+      return this._div;
+    };
+
+    info.update = function (zoom) {
+      var z = zoom || map.getZoom();
+      this._div.innerHTML =
+        '<strong>Zoom : </strong>' + z +
+        '<br><strong>Coordonnées : </strong><span id="coords">–</span>';
+    };
+
+    info.addTo(map);
+
+    // Mise à jour du zoom
+    map.on('zoomend', function () {
+      info.update(map.getZoom());
+    });
+
+    // Affichage des coordonnées sous le curseur
+    map.on('mousemove', function (e) {
+      var lat = e.latlng.lat.toFixed(6);
+      var lng = e.latlng.lng.toFixed(6);
+      var coordsSpan = document.getElementById('coords');
+      if (coordsSpan) {
+        coordsSpan.textContent = lat + ', ' + lng;
+      }
+    });
+  </script>
+</body>
+</html>
