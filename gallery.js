@@ -29,6 +29,7 @@
   const lbCap = $("#lb-cap", lb);
   let photos = [];
   let idx = 0;
+  const inlinePhotos = Array.isArray(window.PHOTOS) ? window.PHOTOS : null;
 
   function open(i){
     idx = i;
@@ -97,7 +98,12 @@
     render();
   }
 
-  // 1) Tente photos.json
+  // 1) Rend immédiatement ce qui est déjà inliné
+  if (inlinePhotos) {
+    useList(inlinePhotos, "window.PHOTOS (inline)");
+  }
+
+  // 2) Puis tente de recharger photos.json pour rester à jour (ex. GitHub Pages)
   fetch("photos.json", {cache: "no-store"})
     .then(r => {
       console.log("[gallery] fetch photos.json →", r.status);
@@ -107,10 +113,7 @@
     .then(list => useList(list, "photos.json"))
     .catch(err => {
       console.warn("[gallery] Impossible de charger photos.json :", err);
-      // 2) Fallback: window.PHOTOS (si défini dans index.html)
-      if (Array.isArray(window.PHOTOS)) {
-        useList(window.PHOTOS, "window.PHOTOS (fallback)");
-      } else {
+      if (!inlinePhotos) {
         container.innerHTML =
           '<p style="color:#cbd5c0">⚠️ Impossible de charger <code>photos.json</code>. '+
           'Vérifie que le fichier est à la racine et que les noms d’images (<code>/photos/…</code>) sont exacts.</p>';
