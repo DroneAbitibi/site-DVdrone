@@ -46,7 +46,7 @@
       border:1px solid #3a4b34;border-radius:16px;padding:18px}
     .card h3{margin:0 0 6px 0;font-size:16px}
     .card p{margin:0;color:var(--muted);font-size:14px}
-    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
     .ph{aspect-ratio:4/3;background:#142014;border:1px solid #2a3a28;
       border-radius:12px;position:relative;overflow:hidden}
     .ph::after{content:"";}
@@ -145,6 +145,34 @@
     </footer>
   </main>
 
+  <script>
+    window.PHOTOS = [
+	{
+    	"src": "photos/uqat-01.jpg",
+    	"alt": "UQAT campus de Rouyn-Noranda",
+    	"w": 1600,
+    	"h": 1067
+  	},
+      {
+      "src": "photos/maison-lac.jpg",
+      "alt": "Vue aérienne d’une maison au bord d’un lac",
+      "w": 1600,
+      "h": 1067
+      },
+      {
+      "src": "photos/lac-paddle.jpg",
+      "alt": "Survol d'un lac pendant une activité de paddle board",
+      "w": 1600,
+      "h": 1067
+      },
+      {
+      "src": "photos/pont-couvert-normetal.jpg",
+      "alt": "Pont couvert en bois au-dessus d’une rivière entourée d’arbres",
+      "w": 1600,
+      "h": 1067
+      }
+    ];
+  </script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
