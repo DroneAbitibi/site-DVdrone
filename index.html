@@ -52,6 +52,12 @@
     .ph::after{content:"";}
     .footer{margin-top:48px;padding:24px 0;color:#a3b8a0;
       border-top:1px solid #3a4b34;font-size:14px;text-align:center}
+    .about{margin-top:28px;display:grid;grid-template-columns:repeat(12,1fr);gap:18px;align-items:center}
+    .about .copy{grid-column:span 7;background:rgba(26,41,22,.55);border:1px solid #3a4b34;padding:20px;border-radius:16px}
+    .about .copy h2{margin:0 0 8px 0;font-size:20px}
+    .about .copy p{margin:0;color:var(--muted);line-height:1.6}
+    .about figure{grid-column:span 5;margin:0}
+    .about img{width:100%;height:auto;border-radius:16px;border:1px solid #3a4b34;box-shadow:0 12px 28px rgba(0,0,0,.25)}
     @media (max-width: 900px){ .card{grid-column: span 6} }
     @media (max-width: 640px){ .card{grid-column: span 12} .nav{gap:12px} }
     @media (max-width: 768px) {
@@ -64,6 +70,8 @@
         width: 100%;
         max-width: 520px;             /* optionnel : limite la largeur max par photo */
       }
+      .about{grid-template-columns:1fr;}
+      .about .copy, .about figure{grid-column:1/span 1}
     }
   </style>
 </head>
@@ -94,6 +102,20 @@
           Demander une soumission
         </a>
       </div>
+    </section>
+
+    <section class="about" id="a-propos">
+      <div class="copy">
+        <h2>À propos de moi</h2>
+        <p>
+          Je m’appelle David Vendette, pilote de drone certifié et passionné par l’imagerie aérienne.
+          J’adore raconter des histoires visuelles claires qui mettent en valeur les paysages et projets de l’Abitibi-Témiscamingue.
+          Chaque mandat est l’occasion de livrer des images précises, professionnelles et adaptées à vos besoins.
+        </p>
+      </div>
+      <figure>
+        <img src="photos/davidvendette.dv" alt="Portrait de David Vendette" width="1600" height="1200" loading="lazy" />
+      </figure>
     </section>
 
     <section id="services" class="grid" aria-label="Services">
