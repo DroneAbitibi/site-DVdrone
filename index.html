@@ -15,17 +15,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { 
-      --bg:#0f1c0f; --card:#1a2916; 
-      --muted:#cbd5c0; --text:#f5f7f5; 
-      --accent:#4c7036; --ring:#6b8e23; 
+    :root {
+      --bg1:#0f1c0f;
+      --bg2:#263321;
+      --panel:#1b2618;
+      --text:#f5f7f5;
+      --muted:#dfe6de;
+      --accent:#a9c48a;
+      --ring:#8ab570;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      background:linear-gradient(180deg,var(--bg) 0%,#263321 100%);color:var(--text);}
+      background:radial-gradient(circle at top left,var(--bg2),var(--bg1));color:var(--text);}
     a{color:inherit;text-decoration:none}
-    .banner{width:100%;overflow:hidden;border-block:1px solid #233225;
-      box-shadow:0 10px 24px rgba(0,0,0,.35)}
+    .banner{width:100%;overflow:hidden;border-block:1px solid rgba(255,255,255,.08);
+      box-shadow:0 10px 28px rgba(0,0,0,.45)}
     .banner img{display:block;width:100%;height:220px;object-fit:cover}
     .container{max-width:1100px;margin-inline:auto;padding:24px}
     .nav{display:flex;gap:20px;align-items:center;justify-content:space-between}
@@ -34,33 +38,35 @@
       background:linear-gradient(135deg,var(--accent),var(--ring));
       display:grid;place-items:center;color:#0f1c0f;font-weight:800}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;
-      border:1px solid #3a4b34;border-radius:999px;color:var(--muted);font-size:12px}
+      border:1px solid rgba(255,255,255,.08);border-radius:999px;color:var(--muted);font-size:12px;
+      background:rgba(169,196,138,.08)}
     .hero{padding:56px 0 32px;display:grid;gap:24px;text-align:center}
     .hero h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:0}
     .hero p{color:var(--muted);max-width:60ch;margin:0 auto}
     .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:12px}
-    .btn{padding:12px 16px;border-radius:12px;border:1px solid #3a4b34;
-      background:#1a2916;transition:.2s;cursor:pointer}
-    .btn:hover{background:#22361f}
+    .btn{padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.08);
+      background:rgba(27,38,24,.85);transition:.2s;cursor:pointer;box-shadow:0 12px 28px rgba(0,0,0,.35)}
+    .btn:hover{background:rgba(27,38,24,1)}
     .btn.primary{background:linear-gradient(135deg,var(--accent),var(--ring));
-      color:#0f1c0f;border:none;font-weight:700}
+      color:#0f1c0f;border:none;font-weight:700;box-shadow:0 14px 32px rgba(0,0,0,.45)}
     .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
-    .card{grid-column: span 4; background:rgba(26,41,22,.55);
-      border:1px solid #3a4b34;border-radius:16px;padding:18px}
+    .card{grid-column: span 4; background:linear-gradient(135deg,rgba(169,196,138,.06),rgba(27,38,24,.9));
+      border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;
+      box-shadow:0 14px 32px rgba(0,0,0,.45)}
     .card h3{margin:0 0 6px 0;font-size:16px}
     .card p{margin:0;color:var(--muted);font-size:14px}
     .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
-    .ph{aspect-ratio:4/3;background:#142014;border:1px solid #2a3a28;
-      border-radius:12px;position:relative;overflow:hidden}
+    .ph{aspect-ratio:4/3;background:#142014;border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;position:relative;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.4)}
     .ph::after{content:"";}
-    .footer{margin-top:48px;padding:24px 0;color:#a3b8a0;
-      border-top:1px solid #3a4b34;font-size:14px;text-align:center}
+    .footer{margin-top:48px;padding:24px 0;color:rgba(223,230,222,.8);
+      border-top:1px solid rgba(255,255,255,.08);font-size:14px;text-align:center}
     .about{margin-top:28px;display:grid;grid-template-columns:repeat(12,1fr);gap:18px;align-items:center}
-    .about .copy{grid-column:span 7;background:rgba(26,41,22,.55);border:1px solid #3a4b34;padding:20px;border-radius:16px}
+    .about .copy{grid-column:span 7;background:linear-gradient(135deg,rgba(169,196,138,.06),rgba(27,38,24,.9));border:1px solid rgba(255,255,255,.08);padding:20px;border-radius:16px;box-shadow:0 14px 32px rgba(0,0,0,.45)}
     .about .copy h2{margin:0 0 8px 0;font-size:20px}
     .about .copy p{margin:0;color:var(--muted);line-height:1.6}
     .about figure{grid-column:span 5;margin:0}
-    .about img{width:100%;height:auto;border-radius:16px;border:1px solid #3a4b34;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+    .about img{width:100%;height:auto;border-radius:16px;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 28px rgba(0,0,0,.35)}
     @media (max-width: 900px){ .card{grid-column: span 6} }
     @media (max-width: 640px){ .card{grid-column: span 12} .nav{gap:12px} }
     @media (max-width: 768px) {
@@ -119,7 +125,7 @@
       </div>
       <div class="card">
         <h3>🗺️ Orthophoto</h3>
-        <p>Photo orthogonale obtenue à partir de prises de vue nadir, idéale pour illustrer fidèlement un terrain. Découvrez un
+        <p>Photo orthogonale issue d’un traitement photogrammétrique à partir de prises de vue nadir, idéale pour illustrer fidèlement un terrain. Découvrez un
           exemple dans la <a href="demo-photogrammetrie.html" style="color:var(--accent)">démo photogrammétrie</a>.</p>
       </div>
       <div class="card">
