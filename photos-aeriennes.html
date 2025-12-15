@@ -5,172 +5,38 @@
   <title>Photos aériennes – DV Drone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Galerie de photos aériennes réalisées par DV Drone en Abitibi-Témiscamingue." />
-  <style>
-    :root {
-      --bg1: #0f1c0f;
-      --bg2: #263321;
-      --panel: rgba(15, 28, 15, 0.82);
-      --card: #f5f7f5;
-      --text: #e8f0e6;
-      --muted: #cfd9cc;
-      --accent: #a9c48a;
-      --shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(145deg, var(--bg1), var(--bg2));
-      color: var(--text);
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-      display: flex;
-      justify-content: center;
-      padding: 32px 18px 48px;
-    }
-
-    .page {
-      width: 100%;
-      max-width: 1380px;
-      background: var(--panel);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      backdrop-filter: blur(6px);
-      border-radius: 14px;
-    }
-
-    header {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(24px, 4vw, 32px);
-    }
-
-    p.lead {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .meta {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 10px 12px;
-      margin-top: 8px;
-      font-size: 14px;
-      color: var(--muted);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-    }
-
-    #gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .ph {
-      position: relative;
-      margin: 0;
-      overflow: hidden;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .ph img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .btn {
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      background: rgba(255, 255, 255, 0.08);
-      color: #f5f7f5;
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .btn:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-2px); }
-    .btn:active { transform: translateY(0); }
-
-    @media (max-width: 700px) {
-      body { padding: 20px 12px 32px; }
-
-      #gallery {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .footer {
-      margin-top: 26px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.07);
-      text-decoration: none;
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: background 0.2s ease, transform 0.2s ease;
-      border-radius: 10px;
-    }
-
-    .back-link:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); }
-
-    .note {
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px dashed rgba(255, 255, 255, 0.24);
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.5;
-      border-radius: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body>
+<body class="page-shell">
+  <header class="site-header frame">
+    <div class="brand" aria-label="DV Drone">
+      <div class="logo" aria-hidden>DV</div>
+      <div>DV Drone <span style="font-weight:500;color:var(--muted)">· Imagerie aérienne</span></div>
+    </div>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a class="pill" href="index.html#services">Services</a>
+      <a class="pill" href="photos-aeriennes.html">Portfolio</a>
+      <a class="pill" href="index.html#contact">Contact</a>
+    </nav>
+  </header>
   <main class="page">
-    <header>
-      <h1>Photos aériennes</h1>
-      <p class="lead">
-      Sélection de prises de vue aériennes réalisées dans le cadre de projets résidentiels, corporatifs et touristiques en Abitibi-Témiscamingue.
-    </p>
-    <div class="meta">Exemples de réalisations</div>
-    </header>
+    <section class="hero-banner hero-photos" aria-label="Introduction de la page">
+      <div class="hero-content">
+        <span class="eyebrow">Galerie</span>
+        <h1>Photos aériennes</h1>
+        <p class="lead">
+          Sélection de prises de vue aériennes réalisées dans le cadre de projets résidentiels, corporatifs et touristiques en Abitibi-Témiscamingue.
+        </p>
+      </div>
+    </section>
 
-    <section id="gallery" aria-label="Galerie des photos aériennes"></section>
+    <section id="gallery" class="gallery-grid" aria-label="Galerie des photos aériennes"></section>
 
     <div class="footer">
       <a class="back-link" href="index.html">
         ← Retour à l'accueil
       </a>
-      <span class="note">Besoin d'une prise de vue similaire ? Écrivez à <a href="mailto:info@dvdrone.ca" style="color: var(--accent); text-decoration: none;">info@dvdrone.ca</a>.</span>
+      <span class="note-box">Besoin d'une prise de vue similaire ? Écrivez à <a href="mailto:info@dvdrone.ca" style="color: var(--accent); text-decoration: none;">info@dvdrone.ca</a>.</span>
     </div>
   </main>
   <script>
