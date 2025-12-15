@@ -67,12 +67,6 @@
       text-decoration: underline;
     }
 
-    .header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
     .brand {
       display: flex;
       align-items: center;
@@ -118,16 +112,51 @@
       background: rgba(169, 196, 138, 0.08);
     }
 
-    .header h1 {
-      margin: 0;
-      font-size: 1.6rem;
+    .hero-banner {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      padding: 26px 26px 30px;
+      margin-bottom: 12px;
+      isolation: isolate;
+      background: linear-gradient(120deg, rgba(15, 28, 15, 0.78), rgba(27, 38, 24, 0.6)),
+        url('photos/pit-01.jpg') center/cover no-repeat;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.45);
     }
 
-    .header p {
-      margin: 0;
-      max-width: 800px;
+    .hero-content {
+      position: relative;
+      display: grid;
+      gap: 8px;
+      max-width: 680px;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(15, 28, 15, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 12px;
+      width: fit-content;
+      backdrop-filter: blur(5px);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4.5vw, 34px);
+    }
+
+    p.lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
     }
 
     .content {
@@ -333,22 +362,15 @@
       </nav>
     </header>
     <a href="index.html" class="back">← Retour à l'accueil</a>
-    <!--
-    <div class="brand">
-      <img src="assets/logo_vert.svg" alt="Logo Drone Abitibi">
-      <span class="brand-name">Drone Abitibi</span>
-    </div>
-    -->
-    <header class="header">
-      <h1>Démonstration de couches cartographiques</h1>
-      <p>
-        Cette carte interactive superpose plusieurs couches issues d’une même mission
-        de photogrammétrie : l’orthophoto pour la vue réaliste, un modèle numérique de
-        terrain (DTM) pour le relief du sol nu, un modèle numérique de surface (DSM) qui
-        inclut les objets présents (bâtiments, arbres). Activez ou désactivez les calques
-        à l’aide du sélecteur dans la carte pour comparer les rendus.
-      </p>
-    </header>
+    <section class="hero-banner" aria-label="Introduction de la page">
+      <div class="hero-content">
+        <span class="eyebrow">Photogrammétrie</span>
+        <h1>Démonstration de couches cartographiques</h1>
+        <p class="lead">
+          Cette carte interactive superpose plusieurs couches issues d’une même mission de photogrammétrie : orthophoto, modèles numériques de terrain (DTM) et de surface (DSM).
+        </p>
+      </div>
+    </section>
 
     <div class="content">
       <!-- Carte -->

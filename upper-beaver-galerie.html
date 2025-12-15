@@ -89,16 +89,44 @@
       background: rgba(169, 196, 138, 0.08);
     }
 
-    .page-header {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 24px;
+    .hero-banner {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      padding: 26px 26px 30px;
+      margin-bottom: 20px;
+      isolation: isolate;
+      background: linear-gradient(120deg, rgba(15, 28, 15, 0.75), rgba(27, 38, 24, 0.55)),
+        url('Upper-Beaver/upper-beaver-01.jpg') center/cover no-repeat;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.45);
+    }
+
+    .hero-content {
+      position: relative;
+      display: grid;
+      gap: 8px;
+      max-width: 680px;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(15, 28, 15, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 12px;
+      width: fit-content;
+      backdrop-filter: blur(5px);
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(24px, 4vw, 32px);
+      font-size: clamp(26px, 4.5vw, 34px);
     }
 
     p.lead {
@@ -215,11 +243,14 @@
         <a class="pill" href="index.html#contact">Contact</a>
       </nav>
     </header>
-    <header class="page-header">
-      <h1>Galerie Upper Beaver</h1>
-      <p class="lead">Sélection d'images aériennes captées à Upper Beaver. Les images sont présentées à taille généreuse pour une visualisation complète.</p>
-      <div class="meta">Page non répertoriée – partage direct par URL uniquement.</div>
-    </header>
+    <section class="hero-banner" aria-label="Introduction de la page">
+      <div class="hero-content">
+        <span class="eyebrow">Galerie</span>
+        <h1>Galerie Upper Beaver</h1>
+        <p class="lead">Sélection d'images aériennes captées à Upper Beaver. Les images sont présentées à taille généreuse pour une visualisation complète.</p>
+        <div class="meta">Page non répertoriée – partage direct par URL uniquement.</div>
+      </div>
+    </section>
 
     <section id="gallery" aria-label="Galerie des images Upper Beaver"></section>
 
