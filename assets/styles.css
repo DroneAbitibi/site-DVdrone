@@ -137,6 +137,7 @@ body.page-shell {
 }
 
 .hero-photos { --hero-image: url('../photos/header.jpg'); }
+.hero-home { --hero-image: url('photos/header.jpg'); }
 .hero-photogrammetry { --hero-image: url('../photos/pit-01.jpg'); }
 .hero-upper-beaver { --hero-image: url('../Upper-Beaver/upper-beaver-01.jpg'); }
 
