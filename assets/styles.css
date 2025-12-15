@@ -167,6 +167,14 @@ body.page-shell {
 .grid > p {
   grid-column: span 12;
 }
+
+.cards-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: stretch;
+  margin-top: 12px;
+}
 .card {
   display: block;
   grid-column: span 4;
