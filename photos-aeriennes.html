@@ -26,8 +26,10 @@
       color: var(--text);
       font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       padding: 32px 18px 48px;
+      gap: 14px;
     }
 
     .page {
@@ -42,14 +44,19 @@
     }
 
     .site-header {
+      width: 100%;
+      max-width: 1380px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 10px 6px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      margin-bottom: 14px;
+      padding: 10px 12px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      border-radius: 14px;
       flex-wrap: wrap;
+      backdrop-filter: blur(6px);
     }
 
     .brand {
@@ -231,18 +238,18 @@
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <div class="brand" aria-label="DV Drone">
+      <div class="logo" aria-hidden>DV</div>
+      <div>DV Drone <span style="font-weight:500;color:var(--muted)">· Imagerie aérienne</span></div>
+    </div>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a class="pill" href="index.html#services">Services</a>
+      <a class="pill" href="photos-aeriennes.html">Portfolio</a>
+      <a class="pill" href="index.html#contact">Contact</a>
+    </nav>
+  </header>
   <main class="page">
-    <header class="site-header">
-      <div class="brand" aria-label="DV Drone">
-        <div class="logo" aria-hidden>DV</div>
-        <div>DV Drone <span style="font-weight:500;color:var(--muted)">· Imagerie aérienne</span></div>
-      </div>
-      <nav class="nav-links" aria-label="Navigation principale">
-        <a class="pill" href="index.html#services">Services</a>
-        <a class="pill" href="photos-aeriennes.html">Portfolio</a>
-        <a class="pill" href="index.html#contact">Contact</a>
-      </nav>
-    </header>
     <section class="hero-banner" aria-label="Introduction de la page">
       <div class="hero-content">
         <span class="eyebrow">Galerie</span>
