@@ -13,356 +13,23 @@
     crossorigin=""
   >
 
-  <style>
-    :root {
-      --bg1:#0f1c0f;
-      --bg2:#263321;
-      --text:#f5f7f5;
-      --muted:#dfe6de;
-      --accent:#a9c48a;
-      --panel:#1b2618;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, var(--bg2), var(--bg1));
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .page {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .site-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 6px 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      flex-wrap: wrap;
-    }
-
-    .back {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-
-    .back:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 700;
-    }
-
-    .brand .logo {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent), #8ab570);
-      display: grid;
-      place-items: center;
-      color: #0f1c0f;
-      font-weight: 800;
-    }
-
-    .brand-name {
-      font-size: clamp(18px, 5vw, 22px);
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 12px;
-      background: rgba(169, 196, 138, 0.08);
-    }
-
-    .hero-banner {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      padding: 26px 26px 30px;
-      margin-bottom: 12px;
-      isolation: isolate;
-      background: linear-gradient(120deg, rgba(15, 28, 15, 0.78), rgba(27, 38, 24, 0.6)),
-        url('photos/pit-01.jpg') center/cover no-repeat;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.45);
-    }
-
-    .hero-content {
-      position: relative;
-      display: grid;
-      gap: 8px;
-      max-width: 680px;
-      z-index: 1;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(15, 28, 15, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--muted);
-      font-size: 12px;
-      width: fit-content;
-      backdrop-filter: blur(5px);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(26px, 4.5vw, 34px);
-    }
-
-    p.lead {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .content {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
-      gap: 1rem;
-      align-items: start;
-    }
-
-    #map {
-      width: 100%;
-      height: 520px;
-      border-radius: 0.75rem;
-      overflow: hidden;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .side-panel {
-      background: linear-gradient(135deg, var(--panel), #10170f);
-      border-radius: 0.75rem;
-      padding: 1rem 1.2rem;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 14px 35px rgba(0,0,0,0.55);
-      font-size: 0.9rem;
-    }
-
-    .side-panel h2 {
-      margin-top: 0;
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .side-panel p {
-      margin-top: 0;
-      margin-bottom: 0.4rem;
-      color: var(--muted);
-    }
-
-    .layer-list {
-      list-style: none;
-      padding-left: 0;
-      margin: 0.6rem 0 0;
-    }
-
-    .layer-list li {
-      margin-bottom: 0.4rem;
-    }
-
-    .chip {
-      display: inline-block;
-      padding: 0.15rem 0.55rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      background: rgba(169,196,138,0.12);
-      border: 1px solid rgba(169,196,138,0.4);
-      color: var(--accent);
-      margin-right: 0.35rem;
-    }
-
-    .note {
-      margin-top: 0.8rem;
-      font-size: 0.8rem;
-      color: rgba(223,230,222,0.8);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 0.6rem;
-    }
-
-    .report {
-      background: linear-gradient(135deg, rgba(169,196,138,0.08), rgba(15,28,15,0.7));
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 0.9rem;
-      padding: 1.4rem 1.5rem;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
-      margin-top: 0.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .report h2 {
-      margin: 0;
-      font-size: 1.2rem;
-    }
-
-    .report .lead {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .report-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem 1.2rem;
-    }
-
-    .report-card {
-      background: rgba(20,25,18,0.82);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 0.75rem;
-      padding: 0.95rem 1rem;
-      display: grid;
-      gap: 0.35rem;
-    }
-
-    .report-card .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      font-size: 0.75rem;
-      color: rgba(223,230,222,0.75);
-      margin: 0;
-    }
-
-    .report-card h3 {
-      margin: 0;
-      font-size: 1.05rem;
-      color: var(--text);
-    }
-
-    .report-card ul {
-      margin: 0;
-      padding-left: 1.05rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .report-card li {
-      margin-bottom: 0.3rem;
-    }
-
-    .report-card strong {
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .report small {
-      color: rgba(223,230,222,0.72);
-      line-height: 1.6;
-    }
-
-    /* Leaflet UI ajustements */
-    .leaflet-control-layers {
-      background: rgba(20,25,18,0.92);
-      color: var(--text);
-      border-radius: 0.5rem;
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-
-    .leaflet-control-layers-expanded {
-      padding: 0.4rem 0.5rem;
-    }
-
-    .leaflet-control-layers-separator {
-      border-top: 1px solid rgba(255,255,255,0.18);
-      margin: 0.25rem 0;
-    }
-
-    .info-box {
-      background: rgba(20,25,18,0.9);
-      padding: 0.45rem 0.65rem;
-      border-radius: 0.45rem;
-      font-size: 0.8rem;
-      line-height: 1.3;
-      border: 1px solid rgba(255,255,255,0.16);
-    }
-
-    .info-box strong {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    @media (max-width: 900px) {
-      .content {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      #map {
-        height: 420px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .page {
-        padding: 1rem;
-      }
-      #map {
-        height: 360px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body>
-  <div class="page">
-    <header class="site-header">
-      <div class="brand" aria-label="DV Drone">
-        <div class="logo" aria-hidden>DV</div>
-        <span class="brand-name">DV Drone · Imagerie aérienne</span>
-      </div>
-      <nav class="nav-links" aria-label="Navigation principale">
-        <a class="pill" href="index.html#services">Services</a>
-        <a class="pill" href="photos-aeriennes.html">Portfolio</a>
-        <a class="pill" href="index.html#contact">Contact</a>
-      </nav>
-    </header>
-    <a href="index.html" class="back">← Retour à l'accueil</a>
-    <section class="hero-banner" aria-label="Introduction de la page">
+<body class="page-shell">
+  <header class="site-header frame">
+    <div class="brand" aria-label="DV Drone">
+      <div class="logo" aria-hidden>DV</div>
+      <span class="brand-name">DV Drone · Imagerie aérienne</span>
+    </div>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a class="pill" href="index.html#services">Services</a>
+      <a class="pill" href="photos-aeriennes.html">Portfolio</a>
+      <a class="pill" href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+  <main class="page">
+    <a href="index.html" class="back-link">← Retour à l'accueil</a>
+    <section class="hero-banner hero-photogrammetry" aria-label="Introduction de la page">
       <div class="hero-content">
         <span class="eyebrow">Photogrammétrie</span>
         <h1>Démonstration de couches cartographiques</h1>
@@ -372,7 +39,7 @@
       </div>
     </section>
 
-    <div class="content">
+    <div class="content-grid">
       <!-- Carte -->
       <div id="map"></div>
 
@@ -454,7 +121,7 @@
         vérifier rapidement la qualité du vol et des produits.
       </small>
     </section>
-  </div>
+  </main>
 
   <!-- Leaflet JS -->
   <script
