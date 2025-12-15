@@ -157,7 +157,16 @@ body.page-shell {
 .btn:hover { background: rgba(27, 38, 24, 1); transform: translateY(-1px); }
 .btn.primary { background: linear-gradient(135deg, var(--accent), var(--ring)); color: #0f1c0f; border: none; font-weight: 700; box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45); }
 
-.grid { display: grid; gap: 16px; grid-template-columns: repeat(12, 1fr); }
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.grid > h2,
+.grid > p {
+  grid-column: span 12;
+}
 .card {
   display: block;
   grid-column: span 4;
