@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Photos aériennes – DV Drone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Galerie de photos aériennes réalisées par DV Drone en Abitibi-Témiscamingue." />
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="page-shell">
+  <header class="site-header frame">
+    <a class="brand" aria-label="DV Drone" href="accueil.html">
+      <div class="logo" aria-hidden>DV</div>
+      <div>DV Drone <span style="font-weight:500;color:var(--muted)">· Imagerie aérienne</span></div>
+    </a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a class="pill" href="accueil.html#services">Services</a>
+      <a class="pill" href="photos-aeriennes.html">Portfolio</a>
+      <a class="pill" href="demo-photogrammetrie.html">Photogrammétrie</a>
+      <a class="pill" href="accueil.html#contact">Contact</a>
+    </nav>
+  </header>
+  <main class="page">
+    <section class="hero-banner hero-photos" aria-label="Introduction de la page">
+      <div class="hero-content">
+        <span class="eyebrow">Galerie</span>
+        <h1>Photos aériennes</h1>
+        <p class="lead">
+          Sélection de prises de vue aériennes réalisées dans le cadre de projets résidentiels, corporatifs et touristiques en Abitibi-Témiscamingue.
+        </p>
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery-grid" aria-label="Galerie des photos aériennes"></section>
+
+    <div class="footer">
+      <a class="back-link" href="accueil.html">
+        ← Retour à l'accueil
+      </a>
+      <span class="note-box">Besoin d'une prise de vue similaire ? Écrivez à <a href="mailto:info@dvdrone.ca" style="color: var(--accent); text-decoration: none;">info@dvdrone.ca</a>.</span>
+    </div>
+  </main>
+  <script>
+    window.PHOTOS = [
+      { src: "portfolio/portfolio-21.jpg", alt: "Rouyn-Noranda, Qc" },
+      { src: "portfolio/uqat-01.jpg", alt: "UQAT campus de Rouyn-Noranda" },
+      { src: "portfolio/uqat-02.jpg", alt: "UQAT centre du Témiscamingue" },
+      { src: "portfolio/portfolio-01.jpg", alt: "Vue aérienne d'un stationnement" },
+      { src: "portfolio/portfolio-02.jpg", alt: "Lac Édouard, Parc à fleur d'eau, Rouyn-Noranda, Qc" },
+      { src: "portfolio/portfolio-03.jpg", alt: "Tour d'observation Le Nid de l'épervier, Collines Kékéko" },
+      { src: "portfolio/portfolio-04.jpg", alt: "Parc de la ribambelle, Ville-Marie, Qc" },
+      { src: "portfolio/portfolio-06.jpg", alt: "Pont courvert, St-Eugène de Guigues, Qc" },
+      { src: "portfolio/portfolio-07.jpg", alt: "Lac Osisko, Rouyn-Noranda, Qc" },
+      { src: "portfolio/portfolio-09.jpg", alt: "Hôpital de Rouyn-Noranda" },
+      { src: "portfolio/portfolio-10.jpg", alt: "Sentiers du lac Rouyn, Rouyn-Noranda, Qc" },
+      { src: "portfolio/portfolio-11.jpg", alt: "Lac Beaverhouse, Dobie, ON" },
+      { src: "portfolio/portfolio-13.jpg", alt: "Terrain en reboisement" },
+      { src: "portfolio/portfolio-14.jpg", alt: "Sentier sinueux en gravier" },
+      { src: "portfolio/portfolio-18.jpg", alt: "Rouyn-Noranda, Qc" },
+      { src: "portfolio/portfolio-19.jpg", alt: "UQAT au coucher du soleil" },
+      { src: "portfolio/portfolio-20.jpg", alt: "Avenue Larrivière, Rouyn-Noranda, Qc" },
+      { src: "portfolio/lac-paddle-01.jpg", alt: "Journée de paddle board" },
+      { src: "portfolio/maison-lac.jpg", alt: "Résidence en bordure d'un lac" },
+      { src: "portfolio/pont-normetal-01.jpg", alt: "Pont couvert, Normétal, Qc" }
+    ];
+  </script>
+  <script src="gallery.js"></script>
+</body>
+</html>
