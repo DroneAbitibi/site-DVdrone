@@ -139,7 +139,7 @@ body.page-shell {
 .hero-photos { --hero-image: url('../photos/header.jpg'); }
 .hero-home { --hero-image: url('../photos/drone-02.jpg'); }
 .hero-photogrammetry { --hero-image: url('../photos/pit-01.jpg'); }
-.hero-upper-beaver { --hero-image: url('../Upper-Beaver/upper-beaver-15.jpg'); }
+.hero-upper-beaver { --hero-image: url('../Upper-Beaver/upper-beaver-04.jpg'); }
 
 .cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 12px; }
 .btn {
